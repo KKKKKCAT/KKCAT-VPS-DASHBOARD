@@ -30,13 +30,13 @@ test_disneyplus() {
         -d '{"deviceFamily":"browser","applicationRuntime":"chrome","deviceProfile":"windows","attributes":{}}')
     
     if [[ "$PreAssertion" == "curl"* ]]; then
-        results["Disney+"]="Failed_NetworkConnection[1])"
+        results["Disney+"]="Failed (Network Connection[1])"
         return
     fi
     
     local assertion=$(echo $PreAssertion | grep -oP '(?<="assertion":")[^"]*')
     if [[ -z "$assertion" ]]; then
-        results["Disney+"]="Failed(Noassertiontokenfound)"
+        results["Disney+"]="Failed (No assertion token found)"
         return
     fi
     
@@ -48,7 +48,7 @@ test_disneyplus() {
         -d "$disneycookie")
     
     if [[ "$TokenContent" == "curl"* ]]; then
-        results["Disney+"]="Failed(NetworkConnection[2])"
+        results["Disney+"]="Failed (Network Connection[2])"
         return
     fi
 
@@ -56,13 +56,13 @@ test_disneyplus() {
     local is403=$(echo $TokenContent | grep '403 ERROR')
 
     if [[ -n "$isBanned" ]] || [[ -n "$is403" ]]; then
-        results["Disney+"]="No_Banned"
+        results["Disney+"]="No (Banned)"
         return
     fi
 
     local refreshToken=$(echo $TokenContent | grep -oP '(?<="refresh_token":")[^"]*')
     if [[ -z "$refreshToken" ]]; then
-        results["Disney+"]="Failed_Norefreshtokenfound)"
+        results["Disney+"]="Failed (No refresh token found)"
         return
     fi
     
@@ -73,7 +73,7 @@ test_disneyplus() {
         -d "$disneycontent")
     
     if [[ "$tmpresult" == "curl"* ]]; then
-        results["Disney+"]="Failed_NetworkConnection[3])"
+        results["Disney+"]="Failed (Network Connection[3])"
         return
     fi
 
@@ -94,7 +94,7 @@ test_netflix() {
     local region=$(curl -sI -X GET --user-agent "$UA_Browser" --max-time 10 "https://www.netflix.com/login" | grep -oP '(?<=location: https://www.netflix.com/)[^/]*' | cut -d '-' -f1 | tr [:lower:] [:upper:])
 
     if [[ "$result1" == "404" ]] && [[ "$result2" == "404" ]]; then
-        results["Netflix"]="Originals_Only(${region})"
+        results["Netflix"]="Originals Only (Region: ${region})"
     elif [[ "$result1" == "200" ]] || [[ "$result2" == "200" ]]; then
         results["Netflix"]="Yes(${region})"
     else
@@ -109,12 +109,12 @@ test_youtube_premium() {
 
     if [[ "$tmpresult" == *"purchaseButtonOverride"* ]] || [[ "$tmpresult" == *"Start trial"* ]]; then
         if [[ -n "$region" ]]; then
-            results["YouTube_Premium"]="Yes(${region})"
+            results["YouTube Premium"]="Yes(${region})"
         else
-            results["YouTube_Premium"]="Yes"
+            results["YouTube Premium"]="Yes"
         fi
     else
-        results["YouTube_Premium"]="No"
+        results["YouTube Premium"]="No"
     fi
 }
 
@@ -136,7 +136,7 @@ MediaUnlockTest_BahamutAnime() {
     local tmpdeviceid=$(curl $curlArgs --user-agent "$UA_Browser" -fsSL "https://ani.gamer.com.tw/ajax/getdeviceid.php" --cookie-jar bahamut_cookie.txt)
     
     if [[ "$tmpdeviceid" == "curl"* ]] || [[ -z "$tmpdeviceid" ]]; then
-        results["Bahamut Anime"]="No_FailedtogetdeviceID)"
+        results["Bahamut Anime"]="No (Failed to get device ID)"
         rm -f bahamut_cookie.txt
         return
     fi
@@ -149,7 +149,7 @@ MediaUnlockTest_BahamutAnime() {
     rm -f bahamut_cookie.txt
 
     if [[ "$tmpresult" == "curl"* ]] || [[ "$tmpresult2" == "curl"* ]]; then
-        results["Bahamut_Anime"]="No_Failedtofetchregioninfo)"
+        results["Bahamut Anime"]="No (Failed to fetch region info)"
         return
     fi
 
@@ -157,11 +157,11 @@ MediaUnlockTest_BahamutAnime() {
     local result2=$(echo "$tmpresult2" | jq '.animeSn // empty')
 
     if [ -n "$result" ] && [ -n "$result2" ]; then
-        results["Bahamut_Anime"]="Yes(TW)"
+        results["Bahamut Anime"]="Yes(TW)"
     elif [ -n "$result2" ]; then
-        results["Bahamut_Anime"]="Yes(HK/MO)"
+        results["Bahamut Anime"]="Yes(HK/MO)"
     else
-        results["Bahamut_Anime"]="No"
+        results["Bahamut Anime"]="No"
     fi
 }
 
@@ -170,23 +170,23 @@ MediaUnlockTest_BilibiliAnimeNew() {
     local tmp=$(curl $curlArgs --user-agent "$UA_Browser" -fsSL "https://api.bilibili.com/x/web-interface/zone")
     
     if [[ $? -ne 0 ]]; then
-        results["Bilibili_Anime"]="Failed_NetworkConnection)"
+        results["Bilibili Anime"]="Failed (Network Connection)"
         return
     fi
 
     local country_code=$(echo "$tmp" | jq -r '.data.country_code // empty')
 
     if [[ "$country_code" == "86" ]]; then
-        results["Bilibili_Anime"]="Yes(CN)"
+        results["Bilibili Anime"]="Yes(CN)"
     elif [[ "$country_code" == "886" ]]; then
-        results["Bilibili_Anime"]="Yes(TW)"
+        results["Bilibili Anime"]="Yes(TW)"
     elif [[ "$country_code" == "852" ]]; then
-        results["Bilibili_Anime"]="Yes(HK)"
+        results["Bilibili Anime"]="Yes(HK)"
     elif [[ "$country_code" == "853" ]]; then
-        results["Bilibili_Anime"]="Yes(MO)"
+        results["Bilibili Anime"]="Yes(MO)"
     else
         local country=$(echo "$tmp" | jq -r '.data.country // empty')
-        results["Bilibili_Anime"]="No($country)"
+        results["Bilibili Anime"]="No($country)"
     fi
 }
 
@@ -211,3 +211,4 @@ json_output=$(jq -nc --argjson data "$(printf '%s\n' "${results[@]}" | jq -R . |
 }')
 
 echo "$json_output"
+
