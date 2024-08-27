@@ -77,7 +77,10 @@ results["DMM TV"]=$(MediaUnlockTest_DMMTV)
 results["Abema.TV"]=$(MediaUnlockTest_AbemaTV)
 results["Niconico"]=$(MediaUnlockTest_Niconico)
 
-json_output=$(jq -n --arg dmm "${results["DMM TV"]}" --arg abema "${results["Abema.TV"]}" --arg nico "${results["Niconico"]}" \
+# json_output=$(jq -n --arg dmm "${results["DMM TV"]}" --arg abema "${results["Abema.TV"]}" --arg nico "${results["Niconico"]}" \
+#                '{ "DMM TV": $dmm, "Abema.TV": $abema, "Niconico": $nico }')
+
+json_output=$(jq -nc --arg dmm "${results["DMM TV"]}" --arg abema "${results["Abema.TV"]}" --arg nico "${results["Niconico"]}" \
                '{ "DMM TV": $dmm, "Abema.TV": $abema, "Niconico": $nico }')
 
 echo "$json_output"
