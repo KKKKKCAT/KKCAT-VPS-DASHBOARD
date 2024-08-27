@@ -20,7 +20,6 @@ test_dazn() {
 
 # Function to test Disney+ (Updated)
 test_disneyplus() {
-    echo "Starting Disney+ test..."
     
     # Step 1: Get Pre-Assertion token
     local PreAssertion=$(curl --user-agent "$UA_Browser" -s -X POST "https://disney.api.edge.bamgrid.com/devices" \
