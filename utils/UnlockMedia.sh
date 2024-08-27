@@ -41,7 +41,6 @@ test_disneyplus() {
         echo "Disney+: Failed (No assertion token found)"
         return
     fi
-    echo "Assertion token: $assertion"
     
     # Step 2: Prepare disneycookie using the assertion token
     local PreDisneyCookie=$(echo "$Media_Cookie" | sed -n '1p')
@@ -51,8 +50,6 @@ test_disneyplus() {
     local TokenContent=$(curl --user-agent "$UA_Browser" -s -X POST "https://disney.api.edge.bamgrid.com/token" \
         -H "authorization: Bearer ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84" \
         -d "$disneycookie")
-    
-    echo "TokenContent response: $TokenContent"
     
     if [[ "$TokenContent" == "curl"* ]]; then
         echo "Disney+: Failed (Network Connection[2])"
@@ -74,7 +71,6 @@ test_disneyplus() {
         echo "Disney+: Failed (No refresh token found)"
         return
     fi
-    echo "Refresh token: $refreshToken"
     
     # Step 4: Validate Disney+ region support
     local fakecontent=$(echo "$Media_Cookie" | sed -n '8p')
@@ -82,8 +78,6 @@ test_disneyplus() {
     local tmpresult=$(curl --user-agent "$UA_Browser" -X POST -sSL --max-time 10 "https://disney.api.edge.bamgrid.com/graph/v1/device/graphql" \
         -H "authorization: Bearer ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84" \
         -d "$disneycontent")
-    
-    echo "GraphQL response: $tmpresult"
     
     if [[ "$tmpresult" == "curl"* ]]; then
         echo "Disney+: Failed (Network Connection[3])"
