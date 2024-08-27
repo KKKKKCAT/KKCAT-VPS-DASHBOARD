@@ -105,5 +105,6 @@ MediaUnlockTest_MyTVSuper
 MediaUnlockTest_HBOGO_ASIA
 MediaUnlockTest_HoyTV
 
-# 輸出最終結果
-echo "$results"
+# 輸出最终紧凑格式的JSON结果
+echo "$results" | jq -c '.'
+
