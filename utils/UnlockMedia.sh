@@ -16,7 +16,7 @@ test_dazn() {
 
     if [[ "$isAllowed" == '"isAllowed":true' ]]; then
         local CountryCode=$(echo $result | tr [:lower:] [:upper:])
-        results["Dazn"]="Yes (Region: ${CountryCode})"
+        results["Dazn"]="Yes(${CountryCode})"
     else
         results["Dazn"]="No"
     fi
@@ -81,7 +81,7 @@ test_disneyplus() {
     local inSupportedLocation=$(echo $tmpresult | grep -oP '(?<="inSupportedLocation":)[^,]*')
 
     if [[ "$inSupportedLocation" == "true" ]]; then
-        results["Disney+"]="Yes (Region: $region)"
+        results["Disney+"]="Yes($region)"
     else
         results["Disney+"]="No"
     fi
@@ -96,7 +96,7 @@ test_netflix() {
     if [[ "$result1" == "404" ]] && [[ "$result2" == "404" ]]; then
         results["Netflix"]="Originals Only (Region: ${region})"
     elif [[ "$result1" == "200" ]] || [[ "$result2" == "200" ]]; then
-        results["Netflix"]="Yes (Region: ${region})"
+        results["Netflix"]="Yes(${region})"
     else
         results["Netflix"]="No"
     fi
@@ -109,7 +109,7 @@ test_youtube_premium() {
 
     if [[ "$tmpresult" == *"purchaseButtonOverride"* ]] || [[ "$tmpresult" == *"Start trial"* ]]; then
         if [[ -n "$region" ]]; then
-            results["YouTube Premium"]="Yes (Region: ${region})"
+            results["YouTube Premium"]="Yes(${region})"
         else
             results["YouTube Premium"]="Yes"
         fi
@@ -125,9 +125,9 @@ test_tiktok() {
     local region=$(echo "$result1" | grep -oP '(?<="store_region":")[^"]*')
 
     if [[ "$result" == *"/explore"* ]]; then
-        results["Tiktok"]="Yes (Region: ${region^^})"
+        results["Tiktok"]="Yes(${region^^})"
     else
-        results["Tiktok"]="No (Region: ${region^^})"
+        results["Tiktok"]="No(${region^^})"
     fi
 }
 
@@ -157,9 +157,9 @@ MediaUnlockTest_BahamutAnime() {
     local result2=$(echo "$tmpresult2" | jq '.animeSn // empty')
 
     if [ -n "$result" ] && [ -n "$result2" ]; then
-        results["Bahamut Anime"]="Yes (Region: TW)"
+        results["Bahamut Anime"]="Yes(TW)"
     elif [ -n "$result2" ]; then
-        results["Bahamut Anime"]="Yes (Region: HK/MO)"
+        results["Bahamut Anime"]="Yes(HK/MO)"
     else
         results["Bahamut Anime"]="No"
     fi
@@ -177,16 +177,16 @@ MediaUnlockTest_BilibiliAnimeNew() {
     local country_code=$(echo "$tmp" | jq -r '.data.country_code // empty')
 
     if [[ "$country_code" == "86" ]]; then
-        results["Bilibili Anime"]="Yes (Region: CN)"
+        results["Bilibili Anime"]="Yes(CN)"
     elif [[ "$country_code" == "886" ]]; then
-        results["Bilibili Anime"]="Yes (Region: TW)"
+        results["Bilibili Anime"]="Yes(TW)"
     elif [[ "$country_code" == "852" ]]; then
-        results["Bilibili Anime"]="Yes (Region: HK)"
+        results["Bilibili Anime"]="Yes(HK)"
     elif [[ "$country_code" == "853" ]]; then
-        results["Bilibili Anime"]="Yes (Region: MO)"
+        results["Bilibili Anime"]="Yes(MO)"
     else
         local country=$(echo "$tmp" | jq -r '.data.country // empty')
-        results["Bilibili Anime"]="No (Country: $country)"
+        results["Bilibili Anime"]="No($country)"
     fi
 }
 
