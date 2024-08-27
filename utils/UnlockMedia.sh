@@ -200,7 +200,7 @@ MediaUnlockTest_BahamutAnime
 MediaUnlockTest_BilibiliAnimeNew
 
 # Generate JSON output
-json_output=$(jq -nc --argjson data "$(printf '%s\n' "${results[@]}" | jq -R . | jq -s .)" '{
+json_output='{
     Dazn:$data[0],
     Disney+:$data[1],
     Netflix:$data[2],
@@ -208,7 +208,7 @@ json_output=$(jq -nc --argjson data "$(printf '%s\n' "${results[@]}" | jq -R . |
     Tiktok:$data[4],
     Bahamut_Anime:$data[5],
     Bilibili_Anime:$data[6]
-}')
+}'
 
 echo "$json_output"
 
