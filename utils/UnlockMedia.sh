@@ -201,13 +201,13 @@ MediaUnlockTest_BilibiliAnimeNew
 
 # Generate JSON output
 json_output=$(jq -nc --argjson data "$(printf '%s\n' "${results[@]}" | jq -R . | jq -s .)" '{
-    "Dazn": $data[0],
-    "Disney+": $data[1],
-    "Netflix": $data[2],
-    "YouTube_Premium": $data[3],
-    "Tiktok": $data[4],
-    "Bahamut_Anime": $data[5],
-    "Bilibili_Anime": $data[6]
+    "Dazn":$data[0],
+    "Disney+":$data[1],
+    "Netflix":$data[2],
+    "YouTube_Premium":$data[3],
+    "Tiktok":$data[4],
+    "Bahamut_Anime":$data[5],
+    "Bilibili_Anime":$data[6]
 }')
 
 echo "$json_output"
