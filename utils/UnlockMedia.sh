@@ -28,8 +28,6 @@ test_disneyplus() {
         -H "content-type: application/json; charset=UTF-8" \
         -d '{"deviceFamily":"browser","applicationRuntime":"chrome","deviceProfile":"windows","attributes":{}}')
     
-    echo "PreAssertion response: $PreAssertion"
-    
     if [[ "$PreAssertion" == "curl"* ]]; then
         echo "Disney+: Failed (Network Connection[1])"
         return
