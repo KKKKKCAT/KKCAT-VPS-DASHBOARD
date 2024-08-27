@@ -1,7 +1,9 @@
 #!/bin/bash
 
-# User-Agent
+# 引入参数
+curlArgs="-4 -s --max-time 10"
 UA_Browser="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36 Edg/112.0.1722.64"
+UA_Dalvik="Dalvik/2.1.0 (Linux; U; Android 9; ALP-AL00 Build/HUAWEIALP-AL00)"
 Media_Cookie=$(curl -s --retry 3 --max-time 10 "https://raw.githubusercontent.com/1-stream/RegionRestrictionCheck/main/cookies")
 
 # Function to test DAZN
@@ -18,9 +20,8 @@ test_dazn() {
     fi
 }
 
-# Function to test Disney+ (Updated)
+# Function to test Disney+
 test_disneyplus() {
-    
     # Step 1: Get Pre-Assertion token
     local PreAssertion=$(curl --user-agent "$UA_Browser" -s -X POST "https://disney.api.edge.bamgrid.com/devices" \
         -H "authorization: Bearer ZGlzbmV5JmJyb3dzZXImMS4wLjA.Cu56AgSfBTDag5NiRA81oLHkDZfu5L3CKadnefEAY84" \
@@ -136,9 +137,70 @@ test_tiktok() {
     fi
 }
 
+# Function to test Bahamut Anime
+MediaUnlockTest_BahamutAnime() {
+    local tmpdeviceid=$(curl $curlArgs --user-agent "$UA_Browser" -fsSL "https://ani.gamer.com.tw/ajax/getdeviceid.php" --cookie-jar bahamut_cookie.txt)
+    
+    if [[ "$tmpdeviceid" == "curl"* ]] || [[ -z "$tmpdeviceid" ]]; then
+        echo "Bahamut Anime: No (Failed to get device ID)"
+        rm -f bahamut_cookie.txt
+        return
+    fi
+    
+    local tempdeviceid=$(echo "$tmpdeviceid" | jq -r '.deviceid // empty')
+
+    local tmpresult=$(curl $curlArgs --user-agent "$UA_Browser" -fsSL "https://ani.gamer.com.tw/ajax/token.php?adID=89422&sn=38832&device=${tempdeviceid}" -b bahamut_cookie.txt)
+    local tmpresult2=$(curl $curlArgs --user-agent "$UA_Browser" -fsSL "https://ani.gamer.com.tw/ajax/token.php?adID=89422&sn=37783&device=${tempdeviceid}" -b bahamut_cookie.txt)
+    
+    rm -f bahamut_cookie.txt
+
+    if [[ "$tmpresult" == "curl"* ]] || [[ "$tmpresult2" == "curl"* ]]; then
+        echo "Bahamut Anime: No (Failed to fetch region info)"
+        return
+    fi
+
+    local result=$(echo "$tmpresult" | jq '.animeSn // empty')
+    local result2=$(echo "$tmpresult2" | jq '.animeSn // empty')
+
+    if [ -n "$result" ] && [ -n "$result2" ]; then
+        echo "Bahamut Anime: Yes (Region: TW)"
+    elif [ -n "$result2" ]; then
+        echo "Bahamut Anime: Yes (Region: HK/MO)"
+    else
+        echo "Bahamut Anime: No"
+    fi
+}
+
+# Function to test Bilibili Anime
+MediaUnlockTest_BilibiliAnimeNew() {
+    local tmp=$(curl $curlArgs --user-agent "$UA_Browser" -fsSL "https://api.bilibili.com/x/web-interface/zone")
+    
+    if [[ $? -ne 0 ]]; then
+        echo "Bilibili Anime: Failed (Network Connection)"
+        return
+    fi
+
+    local country_code=$(echo "$tmp" | jq -r '.data.country_code // empty')
+
+    if [[ "$country_code" == "86" ]]; then
+        echo "Bilibili Anime: Yes (Region: CN)"
+    elif [[ "$country_code" == "886" ]]; then
+        echo "Bilibili Anime: Yes (Region: TW)"
+    elif [[ "$country_code" == "852" ]]; then
+        echo "Bilibili Anime: Yes (Region: HK)"
+    elif [[ "$country_code" == "853" ]]; then
+        echo "Bilibili Anime: Yes (Region: MO)"
+    else
+        local country=$(echo "$tmp" | jq -r '.data.country // empty')
+        echo "Bilibili Anime: No (Country: $country)"
+    fi
+}
+
 # Run all tests
 test_dazn
 test_disneyplus
 test_netflix
 test_youtube_premium
 test_tiktok
+MediaUnlockTest_BahamutAnime
+MediaUnlockTest_BilibiliAnimeNew
