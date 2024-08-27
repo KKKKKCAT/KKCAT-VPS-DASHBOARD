@@ -116,7 +116,7 @@ for key in "${!results[@]}"; do
 done
 
 # 生成 JSON 输出
-json_output=$(jq -n --arg kktv "${results["KKTV"]}" \
+json_output=$(jq -nc --arg kktv "${results["KKTV"]}" \
                        --arg litv "${results["LiTV"]}" \
                        --arg myvideo "${results["MyVideo"]}" \
                        --arg linetv "${results["LineTV.TW"]}" \
