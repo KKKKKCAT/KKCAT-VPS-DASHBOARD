@@ -204,10 +204,10 @@ json_output=$(jq -nc --argjson data "$(printf '%s\n' "${results[@]}" | jq -R . |
     "Dazn": $data[0],
     "Disney+": $data[1],
     "Netflix": $data[2],
-    "YouTube Premium": $data[3],
+    "YouTube": $data[3],
     "Tiktok": $data[4],
-    "Bahamut Anime": $data[5],
-    "Bilibili Anime": $data[6]
+    "Bahamut": $data[5],
+    "Bilibili": $data[6]
 }')
 
 echo "$json_output"
