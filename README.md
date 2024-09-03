@@ -1,7 +1,3 @@
-Here is the English translation of your provided text:
-
----
-
 # ✔ KKCAT 貓咪探針 (Non-Open Source)
 
 KKCAT 貓咪探針 is a powerful and user-friendly VPS management dashboard solution designed to monitor and manage multiple virtual servers in real time through an intuitive interface. This dashboard is built on Cloudflare Workers and Cloudflare Pages, integrating features like streaming media detection, performance monitoring, and more to ensure efficient operation and visual management of servers.
