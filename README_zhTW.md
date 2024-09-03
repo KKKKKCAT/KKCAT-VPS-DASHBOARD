@@ -54,7 +54,7 @@ VPS Dashboard 支持高度的定制性，用戶可以根據需要添加或修改
 
 ## 👀 前端演示
 
-![](https://example.com/img/VPS-Dashboard-1.webp)
+![](https://img2.kkcat.blog/file/3abceeee7c463c7fee6bb.png)
 ![](https://example.com/img/VPS-Dashboard-2.webp)
 
 
