@@ -63,6 +63,13 @@ VPS Dashboard supports a high degree of customizability, allowing users to add o
 
 ![](https://img2.kkcat.blog/file/ecb213d5df4700677f6ad.png)
 
+## 👀 Front-End - Add to Home Screen on iPhone (App-like) Demo
+
+![](https://img2.kkcat.blog/file/1046d261f291e98a3b733.png)
+
+
+If you have any other requests or need further translations, feel free to ask!
+
 ## 👀 Back-End Demo
 ![](https://img2.kkcat.blog/file/883a3794c9f8189c1e469.png)
 
