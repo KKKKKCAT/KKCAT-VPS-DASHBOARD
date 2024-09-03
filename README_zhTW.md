@@ -52,7 +52,7 @@ VPS Dashboard 支持高度的定制性，用戶可以根據需要添加或修改
 - **樣式自定義**：通過修改 CSS 文件，用戶可以輕松更改儀表板的外觀，包括顏色、字體、布局等。
 - **功能擴展**：支持通過 JavaScript 添加新的功能或數據字段，滿足不同用戶的需求。
 
-## 👀 演示
+## 👀 前端演示
 
 ![](https://example.com/img/VPS-Dashboard-1.webp)
 ![](https://example.com/img/VPS-Dashboard-2.webp)
