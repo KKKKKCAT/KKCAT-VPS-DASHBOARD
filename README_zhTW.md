@@ -63,6 +63,9 @@ VPS Dashboard 支持高度的定制性，用戶可以根據需要添加或修改
 
 ![](https://img2.kkcat.blog/file/ecb213d5df4700677f6ad.png)
 
+## 👀 前端 - iPhone加入主畫面(模仿app) 演示
+![](https://img2.kkcat.blog/file/1046d261f291e98a3b733.png)
+
 ## 👀 後端演示
 ![](https://img2.kkcat.blog/file/883a3794c9f8189c1e469.png)
 
