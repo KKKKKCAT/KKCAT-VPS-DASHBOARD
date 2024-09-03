@@ -72,7 +72,7 @@ VPS Dashboard 支持高度的定制性，用戶可以根據需要添加或修改
 
 ## 👤 作者
 
-**YourName**
+**KKCAT**
 
 - [![Telegram](https://img.shields.io/badge/-Telegram-2CA5E0?style=flat-square&logo=telegram&logoColor=white)](https://t.me/yourtelegram)
 - [![Twitter](https://img.shields.io/badge/Twitter-Follow-1DA1F2?style=flat&logo=twitter)](https://twitter.com/yourtwitter)
