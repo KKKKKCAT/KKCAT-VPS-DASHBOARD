@@ -2,6 +2,9 @@
 
 KKCAT 貓咪探針 是一個強大且易用的 VPS 管理儀表板解決方案，旨在通過直觀的界面實時監控和管理多個虛擬服務器。本儀表板基於 Cloudflare Workers 和 Cloudflare Pages 構建，集成了流媒體檢測、性能監控和其他功能，以確保服務器運行的高效性和可視化管理。
 
+## 示範網址
+https://vps-demo.kkcat.blog
+
 ## 📱 功能概覽
 
 - 實時監控 VPS 的 CPU、內存和磁盤使用情況
