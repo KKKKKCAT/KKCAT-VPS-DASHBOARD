@@ -24,9 +24,9 @@ VPS Dashboard 的前端采用了現代化的設計風格，結合了響應式布
 
 儀表板通過調用 Cloudflare Workers 提供的 API 來獲取 VPS 的實時數據。以下是核心函數和其功能：
 
-- `fetchVpsData()`：發送請求到 Cloudflare Workers，獲取所有 VPS 的最新數據。
-- `fetchVpsDetail(server_id)`：根據服務器 ID 獲取特定 VPS 的詳細信息。
-- `updateDashboard()`：更新儀表板上的所有 VPS 信息，包括重新獲取數據並渲染頁面。
+- 發送請求到 Cloudflare Workers，獲取所有 VPS 的最新數據。
+- 根據服務器 ID 獲取特定 VPS 的詳細信息。
+- 更新儀表板上的所有 VPS 信息，包括重新獲取數據並渲染頁面。
 
 這些函數通過發送 HTTP 請求到 Cloudflare Workers，獲取從數據庫中提取的 VPS 數據，並在前端進行動態更新和顯示。
 
